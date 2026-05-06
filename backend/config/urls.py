@@ -8,17 +8,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Authentication
-    path('api/v1/auth/', include('dj_rest_auth.urls')),
-    path('api/v1/auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('auth/', include('dj_rest_auth.urls')),
+    path('auth/registration/', include('dj_rest_auth.registration.urls')),
 
-    # Google OAuth — custom view, no allauth dependency
-    path('api/v1/auth/social/google/', GoogleLogin.as_view(), name='google-login'),
+    # Google OAuth
+    path('auth/social/google/', GoogleLogin.as_view(), name='google-login'),
 
     # App APIs
-    path('api/v1/users/', include('apps.users.urls')),
-    path('api/v1/books/', include('apps.books.urls')),
-    path('api/v1/shelves/', include('apps.shelves.urls')),
-    path('api/v1/recommendations/', include('apps.recommendations.urls')),
+    path('users/', include('apps.users.urls')),
+    path('books/', include('apps.books.urls')),
+    path('shelves/', include('apps.shelves.urls')),
+    path('recommendations/', include('apps.recommendations.urls')),
 ]
 
 if settings.DEBUG:
