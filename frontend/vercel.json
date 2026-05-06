@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "comment": "BookWise Frontend — Vercel Config. Deploy /frontend folder to Vercel.",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
@@ -8,7 +7,6 @@
     {
       "source": "/((?!api/.*).*)",
       "destination": "/index.html",
-      "comment": "SPA fallback — all non-API routes serve index.html"
     }
   ],
   "headers": [
