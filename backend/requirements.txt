@@ -12,3 +12,5 @@ django-filter==23.3
 whitenoise==6.6.0
 gunicorn==21.2.0
 social-auth-app-django==5.4.0
+setuptools
+wheel
