@@ -35,7 +35,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} BookWise. Made with ❤️ for book lovers.</p>
+        <p>© {new Date().getFullYear()} BookWise. Made with ❤️ for book lovers by Hari Shankar Mishra.</p>
         <div className="footer-social">
           <a href="#" aria-label="Twitter"><Twitter size={18} /></a>
           <a href="#" aria-label="Instagram"><Instagram size={18} /></a>
