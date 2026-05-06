@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-me-in-production')
 
 # SECURITY: Set DEBUG=False in production
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Add your Vercel domain and local dev here
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
