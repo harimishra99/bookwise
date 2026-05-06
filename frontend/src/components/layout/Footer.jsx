@@ -1,0 +1,47 @@
+import { Link } from 'react-router-dom'
+import { BookOpen, Twitter, Instagram, Github } from 'lucide-react'
+
+export default function Footer() {
+  return (
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-brand">
+          <BookOpen size={24} />
+          <span>BookWise</span>
+          <p>Discover your next great read.</p>
+        </div>
+        <div className="footer-links">
+          <div>
+            <h4>Discover</h4>
+            <Link to="/search?trending=true">Trending</Link>
+            <Link to="/category/new-reader">New Readers</Link>
+            <Link to="/category/fiction">Fiction</Link>
+            <Link to="/category/finance">Finance</Link>
+          </div>
+          <div>
+            <h4>Account</h4>
+            <Link to="/login">Sign In</Link>
+            <Link to="/register">Get Started</Link>
+            <Link to="/shelves">My Shelves</Link>
+            <Link to="/profile">Profile</Link>
+          </div>
+          <div>
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <p>© {new Date().getFullYear()} BookWise. Made with ❤️ for book lovers.</p>
+        <div className="footer-social">
+          <a href="#" aria-label="Twitter"><Twitter size={18} /></a>
+          <a href="#" aria-label="Instagram"><Instagram size={18} /></a>
+          <a href="#" aria-label="GitHub"><Github size={18} /></a>
+        </div>
+      </div>
+    </footer>
+  )
+}
