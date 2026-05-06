@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { BookOpen, Twitter, Instagram, Github } from 'lucide-react'
+import { BookOpen, Linkedin, Instagram, Github } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -37,7 +37,7 @@ export default function Footer() {
       <div className="footer-bottom">
         <p>© {new Date().getFullYear()} BookWise. Made with ❤️ for book lovers by Hari Shankar Mishra.</p>
         <div className="footer-social">
-          <a href="https://www.linkedin.com/in/harishankarmishra9/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><LinkedIn size={18} /></a>
+          <a href="https://www.linkedin.com/in/harishankarmishra9/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><Linkedin size={18} /></a>
           <a href="https://www.instagram.com/hari.mishra_/" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><Instagram size={18} /></a>
           <a href="https://github.com/harimishra99/bookwise" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><Github size={18} /></a>
         </div>
