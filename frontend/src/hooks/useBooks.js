@@ -11,6 +11,7 @@
 
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tanstack/react-query'
 import api from '@/lib/api'
+import useAuthStore from '@/stores/authStore'
 
 // ── Query Keys (used for cache invalidation) ─────────────────────────────────
 export const bookKeys = {
@@ -143,10 +144,12 @@ export function useSubmitReview(slug) {
 // ── Recommendation Hooks ──────────────────────────────────────────────────────
 
 export function useRecommendations() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   return useQuery({
     queryKey: bookKeys.recommendations(),
     queryFn: () => api.get('/recommendations/').then(r => r.data),
     staleTime: 1000 * 60 * 30,
+    enabled: isAuthenticated, // ← only fetch if logged in
   })
 }
 

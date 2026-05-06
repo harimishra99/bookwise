@@ -1,9 +1,10 @@
-import { Outlet, Link, Navigate } from 'react-router-dom'
-import { BookOpen } from 'lucide-react'
+import { Outlet, Link, Navigate, useNavigate } from 'react-router-dom'
+import { BookOpen, X } from 'lucide-react'
 import useAuthStore from '@/stores/authStore'
 
 export default function AuthLayout() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const navigate = useNavigate()
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />
@@ -11,6 +12,23 @@ export default function AuthLayout() {
 
   return (
     <div className="auth-layout">
+      {/* Close button */}
+      <button
+        onClick={() => navigate('/')}
+        style={{
+          position: 'fixed',
+          top: '16px',
+          right: '16px',
+          background: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          color: '#94a3b8',
+          zIndex: 100,
+        }}
+      >
+        <X size={28} />
+      </button>
+
       <div className="auth-brand-panel">
         <Link to="/" className="auth-logo">
           <BookOpen size={32} />

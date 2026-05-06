@@ -77,11 +77,9 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem('refresh_token')
 
       if (!refreshToken) {
-        // No refresh token — log user out
         localStorage.clear()
-        window.location.href = '/login'
-        return Promise.reject(error)
-      }
+        return Promise.reject(error)  // ← just reject, don't redirect
+    }
 
       try {
         const response = await axios.post(`${BASE_URL}/auth/token/refresh/`, {
