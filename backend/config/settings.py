@@ -7,7 +7,6 @@ Configure environment variables in a .env file at the backend root.
 
 import os
 from pathlib import Path
-from decouple import config
 from datetime import timedelta
 
 # ─────────────────────────────────────────────
@@ -16,7 +15,7 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY: Keep secret key secret in production!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-me-in-production')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-production')
 
 # SECURITY: Set DEBUG=False in production
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
@@ -192,9 +191,9 @@ REST_FRAMEWORK = {
 # ─────────────────────────────────────────────
 # CORS — Allow React dev server & Vercel
 # ─────────────────────────────────────────────
-CORS_ALLOWED_ORIGINS = config(
+CORS_ALLOWED_ORIGINS = os.environ.get(
     'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:3000,http://localhost:5173'
+    'http://localhost:3000,http://localhost:5173'
 ).split(',')
 
 CORS_ALLOW_CREDENTIALS = True
@@ -238,7 +237,7 @@ OPEN_LIBRARY_COVERS_URL = 'https://covers.openlibrary.org/b'
 
 # Google Books API (optional, for richer data)
 # Get key from: console.cloud.google.com
-GOOGLE_BOOKS_API_KEY = config('GOOGLE_BOOKS_API_KEY', default='')
+GOOGLE_BOOKS_API_KEY = os.environ.get('GOOGLE_BOOKS_API_KEY', '')
 GOOGLE_BOOKS_API_URL = 'https://www.googleapis.com/books/v1/volumes'
 
 
