@@ -63,11 +63,30 @@ class GoogleLogin(APIView):
         )
 
         # Update avatar and name if user already exists
+        # Update avatar and name if user already exists
         if not created:
             user.avatar = picture
             if not user.full_name:
                 user.full_name = name
             user.save(update_fields=['avatar', 'full_name'])
+
+        # Create default shelves for ALL users if they don't have them
+        from apps.shelves.models import Shelf
+        default_shelves = [
+            {'name': 'Want to Read', 'slug': 'want-to-read'},
+            {'name': 'Currently Reading', 'slug': 'reading'},
+            {'name': 'Read', 'slug': 'read'},
+        ]
+        for shelf_data in default_shelves:
+            Shelf.objects.get_or_create(
+                user=user,
+                slug=shelf_data['slug'],
+                defaults={
+                    'name': shelf_data['name'],
+                    'is_default': True,
+                    'is_public': True,
+                }
+            )
 
         # Generate JWT tokens
         refresh = RefreshToken.for_user(user)

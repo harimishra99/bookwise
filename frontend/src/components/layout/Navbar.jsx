@@ -88,6 +88,9 @@ export default function Navbar() {
         {/* ── Desktop Nav Links ─────────────────────────────── */}
         <div className="navbar-links">
           <Link to="/" className="nav-link">Home</Link>
+            {isAuthenticated && (
+          <Link to="/shelves" className="nav-link">My Shelves</Link>
+      )}
 
           {/* Categories Dropdown */}
           <div

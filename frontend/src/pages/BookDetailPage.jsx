@@ -173,7 +173,7 @@ function AddToShelfDialog({ book, onClose }) {
       >
         <h3>Add to Shelf</h3>
         <div className="shelf-options">
-          {shelves?.map(shelf => (
+          {(Array.isArray(shelves) ? shelves : shelves?.results || []).map(shelf => (
             <button key={shelf.id} onClick={() => handleAdd(shelf.id)} className="shelf-option-btn">
               <BookOpen size={16} />
               {shelf.name}
