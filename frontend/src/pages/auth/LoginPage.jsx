@@ -71,7 +71,7 @@ const googleLogin = useGoogleLogin({
     >
       <div className="auth-form-header">
         <h1>Welcome back</h1>
-        <p>Sign in to your BookWise account</p>
+        <p>Sign in to your BookSuggestion account</p>
       </div>
 
       <button onClick={() => googleLogin()} className="google-btn">

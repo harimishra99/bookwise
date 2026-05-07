@@ -32,7 +32,7 @@ export default function AuthLayout() {
       <div className="auth-brand-panel">
         <Link to="/" className="auth-logo">
           <BookOpen size={32} />
-          <span>BookWise</span>
+          <span>BookSuggestion</span>
         </Link>
         <div className="auth-quote">
           <blockquote>"A reader lives a thousand lives before he dies."</blockquote>

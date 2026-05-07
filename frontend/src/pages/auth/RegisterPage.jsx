@@ -35,7 +35,7 @@ export default function RegisterPage() {
   const onSubmit = async (data) => {
     const result = await registerUser(data.email, data.password1, data.password2)
     if (result.success) {
-      toast.success('Account created! Welcome to BookWise 🎉')
+      toast.success('Account created! Welcome to BookSuggestion 🎉')
       navigate('/')
     } else {
       toast.error(result.error)
@@ -69,7 +69,7 @@ const googleLogin = useGoogleLogin({
       transition={{ duration: 0.4 }}
     >
       <div className="auth-form-header">
-        <h1>Join BookWise</h1>
+        <h1>Join BookSuggestion</h1>
         <p>Create your free account and start discovering books</p>
       </div>
 

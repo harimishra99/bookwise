@@ -2,7 +2,7 @@
   "name": "bookwise-frontend",
   "private": true,
   "version": "1.0.0",
-  "description": "BookWise — Your Personal Book Discovery Platform",
+  "description": "BookSuggestion — Your Personal Book Discovery Platform",
   "type": "module",
   "scripts": {
     "dev": "vite",

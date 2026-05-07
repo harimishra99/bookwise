@@ -69,7 +69,7 @@ export default function Navbar() {
         {/* ── Logo ─────────────────────────────────────────── */}
         <Link to="/" className="navbar-logo">
           <BookOpen className="logo-icon" />
-          <span className="logo-text">BookWise</span>
+          <span className="logo-text">BookSuggestion</span>
         </Link>
 
         {/* ── Desktop Search ────────────────────────────────── */}

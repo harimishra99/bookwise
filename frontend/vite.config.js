@@ -22,8 +22,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'BookWise — Book Discovery',
-        short_name: 'BookWise',
+        name: 'BookSuggestion — Book Discovery',
+        short_name: 'BookSuggestion',
         description: 'Discover your next favourite book. Personalized recommendations, trending books, and more.',
         theme_color: '#1a1a2e',
         background_color: '#ffffff',
