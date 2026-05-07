@@ -22,7 +22,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-producti
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Add your Vercel domain and local dev here
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') + ['.vercel.app']
 
 
 # ─────────────────────────────────────────────
@@ -221,12 +221,18 @@ DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='BookWise <noreply@boo
 # ─────────────────────────────────────────────
 # STATIC & MEDIA FILES
 # ─────────────────────────────────────────────
+# ── STATIC FILES ──────────────────────────────────────────────
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# ── MEDIA FILES ───────────────────────────────────────────────
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# ── WHITENOISE (serves static files on Vercel) ────────────────
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = True
 
 
 # ─────────────────────────────────────────────
