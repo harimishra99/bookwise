@@ -1,9 +1,3 @@
-/**
- * Profile Page
- * ============
- * User profile with stats, genre preferences, and settings.
- */
-
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { User, BookOpen, Star, Edit3, Save, X } from 'lucide-react'
@@ -21,7 +15,11 @@ const READER_TYPES = [
 
 export default function ProfilePage() {
   const { user, updateProfile } = useAuthStore()
-  const { data: categories } = useCategories()
+  const { data: categoriesRaw } = useCategories()
+  const categories = Array.isArray(categoriesRaw)
+    ? categoriesRaw
+    : categoriesRaw?.results || []
+
   const [isEditing, setIsEditing] = useState(false)
   const [saving, setSaving] = useState(false)
 
@@ -37,7 +35,7 @@ export default function ProfilePage() {
   const selectedGenres = watch('preferred_genres') || []
 
   const toggleGenre = (slug) => {
-    const current = selectedGenres
+    const current = Array.isArray(selectedGenres) ? selectedGenres : []
     const updated = current.includes(slug)
       ? current.filter(g => g !== slug)
       : [...current, slug]
@@ -62,32 +60,46 @@ export default function ProfilePage() {
     setIsEditing(false)
   }
 
+  if (!user) {
+    return (
+      <div style={{ textAlign: 'center', padding: '64px', color: '#94a3b8' }}>
+        <p>Loading profile...</p>
+      </div>
+    )
+  }
+
   return (
     <div className="profile-page">
       <div className="profile-container">
-        {/* ── Profile Header ────────────────────────────────── */}
         <div className="profile-header">
           <div className="profile-avatar-wrapper">
             {user?.avatar ? (
-              <img src={user.avatar} alt={user.display_name} className="profile-avatar" />
+              <img
+                src={user.avatar}
+                alt={user.display_name}
+                className="profile-avatar"
+                onError={(e) => e.target.style.display = 'none'}
+              />
             ) : (
               <div className="profile-avatar-fallback">
                 {user?.display_name?.[0]?.toUpperCase() || 'U'}
               </div>
             )}
           </div>
+
           <div className="profile-name-area">
-            {!isEditing ? (
+            {!isEditing && (
               <>
                 <h1>{user?.display_name}</h1>
                 <p className="profile-email">{user?.email}</p>
                 {user?.bio && <p className="profile-bio">{user.bio}</p>}
                 <span className="reader-type-badge">
-                  {READER_TYPES.find(r => r.value === user?.reader_type)?.label || '📖 Reader'}
+                  {READER_TYPES.find(r => r.value === user?.reader_type)?.label || '📖 Casual Reader'}
                 </span>
               </>
-            ) : null}
+            )}
           </div>
+
           {!isEditing && (
             <button onClick={() => setIsEditing(true)} className="btn-ghost edit-btn">
               <Edit3 size={16} /> Edit Profile
@@ -95,7 +107,6 @@ export default function ProfilePage() {
           )}
         </div>
 
-        {/* ── Stats ─────────────────────────────────────────── */}
         <div className="profile-stats">
           <div className="stat-card">
             <BookOpen size={24} />
@@ -109,12 +120,11 @@ export default function ProfilePage() {
           </div>
           <div className="stat-card">
             <User size={24} />
-            <strong>{user?.preferred_genres?.length || 0}</strong>
+            <strong>{Array.isArray(user?.preferred_genres) ? user.preferred_genres.length : 0}</strong>
             <span>Genres</span>
           </div>
         </div>
 
-        {/* ── Edit Form ─────────────────────────────────────── */}
         {isEditing && (
           <motion.form
             onSubmit={handleSubmit(onSubmit)}
@@ -124,13 +134,19 @@ export default function ProfilePage() {
           >
             <div className="field-group">
               <label>Full Name</label>
-              <input type="text" className="form-input" {...register('full_name')} />
+              <input
+                type="text"
+                className="form-input"
+                style={{ padding: '10px 12px' }}
+                {...register('full_name')}
+              />
             </div>
 
             <div className="field-group">
               <label>Bio</label>
               <textarea
                 className="form-input"
+                style={{ padding: '10px 12px' }}
                 rows={3}
                 placeholder="Tell other readers about yourself..."
                 maxLength={500}
@@ -146,7 +162,11 @@ export default function ProfilePage() {
                     key={rt.value}
                     className={`reader-type-option ${watch('reader_type') === rt.value ? 'selected' : ''}`}
                   >
-                    <input type="radio" value={rt.value} {...register('reader_type')} />
+                    <input
+                      type="radio"
+                      value={rt.value}
+                      {...register('reader_type')}
+                    />
                     <span>{rt.label}</span>
                     <small>{rt.desc}</small>
                   </label>
@@ -155,18 +175,27 @@ export default function ProfilePage() {
             </div>
 
             <div className="field-group">
-              <label>Favourite Genres <small>(used for recommendations)</small></label>
+              <label>
+                Favourite Genres{' '}
+                <small style={{ color: '#64748b' }}>(used for recommendations)</small>
+              </label>
               <div className="genre-picker">
-                {categories?.filter(c => c.category_type === 'genre').map(cat => (
-                  <button
-                    key={cat.slug}
-                    type="button"
-                    onClick={() => toggleGenre(cat.slug)}
-                    className={`genre-chip ${selectedGenres.includes(cat.slug) ? 'selected' : ''}`}
-                  >
-                    {cat.icon} {cat.name}
-                  </button>
-                ))}
+                {categories
+                  .filter(c => c.category_type === 'genre')
+                  .map(cat => (
+                    <button
+                      key={cat.slug}
+                      type="button"
+                      onClick={() => toggleGenre(cat.slug)}
+                      className={`genre-chip ${
+                        Array.isArray(selectedGenres) && selectedGenres.includes(cat.slug)
+                          ? 'selected'
+                          : ''
+                      }`}
+                    >
+                      {cat.icon} {cat.name}
+                    </button>
+                  ))}
               </div>
             </div>
 

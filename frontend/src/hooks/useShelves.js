@@ -1,9 +1,3 @@
-/**
- * Shelves Hooks (React Query)
- * ===========================
- * Hooks for managing user reading shelves.
- */
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import api from '@/lib/api'
 import useAuthStore from '@/stores/authStore'
@@ -20,16 +14,24 @@ export function useShelves() {
   const { isAuthenticated } = useAuthStore()
   return useQuery({
     queryKey: shelfKeys.list(),
-    queryFn: () => api.get('/shelves/').then(r => r.data),
+    queryFn: () => api.get('/shelves/').then(r => {
+      const data = r.data
+      return Array.isArray(data) ? data : data?.results || []
+    }),
     enabled: isAuthenticated,
+    initialData: [],
   })
 }
 
 export function useShelfBooks(shelfId) {
   return useQuery({
     queryKey: shelfKeys.books(shelfId),
-    queryFn: () => api.get(`/shelves/${shelfId}/books/`).then(r => r.data),
+    queryFn: () => api.get(`/shelves/${shelfId}/books/`).then(r => {
+      const data = r.data
+      return Array.isArray(data) ? data : data?.results || []
+    }),
     enabled: !!shelfId,
+    initialData: [],
   })
 }
 
@@ -70,6 +72,9 @@ export function useCreateShelf() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: shelfKeys.list() })
       toast.success('Shelf created!')
+    },
+    onError: () => {
+      toast.error('Failed to create shelf')
     },
   })
 }
