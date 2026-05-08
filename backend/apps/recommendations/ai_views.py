@@ -44,7 +44,7 @@ Respond with ONLY the JSON array."""
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": prompt}
                 ],
-                model="llama3-8b-8192",
+                model="llama-3.1-8b-instant",
                 temperature=0.7,
                 max_tokens=1000,
             )
