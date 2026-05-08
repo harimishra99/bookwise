@@ -1554,3 +1554,155 @@ h3 { font-size: clamp(1.1rem, 2vw, 1.3rem); }
   .footer { margin-bottom: 0; }
   .main-content { padding-bottom: 0; }
 }
+
+/* AI Quiz Page */
+.ai-quiz-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.ai-quiz-container {
+  max-width: 600px;
+  width: 100%;
+  background: #1e293b;
+  border-radius: 24px;
+  padding: 2.5rem;
+}
+.ai-quiz-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a78bfa;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+.ai-progress-bar {
+  height: 4px;
+  background: #334155;
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
+}
+.ai-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+.ai-progress-text {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 2rem;
+}
+.ai-question { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+.ai-subtitle { color: #94a3b8; margin-bottom: 1.5rem; }
+.ai-options-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.ai-option {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid #334155;
+  background: transparent;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ai-option.selected {
+  border-color: #7c3aed;
+  background: #7c3aed22;
+  color: #a78bfa;
+}
+.ai-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+.ai-option-row {
+  padding: 0.875rem 1.25rem;
+  border-radius: 12px;
+  border: 1.5px solid #334155;
+  background: transparent;
+  color: #e2e8f0;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+.ai-option-row.selected {
+  border-color: #7c3aed;
+  background: #7c3aed22;
+  color: #a78bfa;
+}
+.ai-text-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  border: 1.5px solid #334155;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+.ai-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ai-next-btn { display: flex; align-items: center; gap: 8px; }
+.ai-back-btn { display: flex; align-items: center; gap: 8px; }
+.spinning { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* AI Results */
+.ai-results-page { max-width: 900px; margin: 0 auto; padding: 2rem; }
+.ai-results-header { text-align: center; margin-bottom: 2rem; }
+.ai-sparkle-icon { color: #a78bfa; margin: 0 auto 1rem; display: block; }
+.ai-results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+.ai-result-card {
+  background: #1e293b;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  position: relative;
+}
+.ai-result-number {
+  position: absolute;
+  top: -10px; left: -10px;
+  background: #7c3aed;
+  color: white;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.8rem;
+}
+.ai-result-cover { width: 70px; height: 100px; object-fit: cover; border-radius: 8px; }
+.ai-result-info { flex: 1; }
+.ai-result-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+.ai-result-author { color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px; }
+.ai-result-reason { color: #cbd5e1; font-size: 0.8rem; margin-bottom: 8px; }
+.ai-result-link { color: #a78bfa; font-size: 0.85rem; }
+.ai-retry-btn { display: block; margin: 0 auto; }
+
+/* AI Banner on Homepage */
+.ai-banner-section { padding: 0 0 2rem; }
+.ai-banner {
+  background: linear-gradient(135deg, #1e1b4b, #312e81);
+  border: 1px solid #4c1d95;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.ai-banner-content { display: flex; align-items: center; gap: 1rem; }
+.ai-banner-icon { color: #a78bfa; flex-shrink: 0; }
+.ai-banner h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+.ai-banner p { color: #a5b4fc; font-size: 0.9rem; }
+.ai-banner-btn { white-space: nowrap; }

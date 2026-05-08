@@ -16,6 +16,7 @@ import ProfilePage from '@/pages/ProfilePage'
 import MyShelvesPage from '@/pages/MyShelvesPage'
 import ShelfDetailPage from '@/pages/ShelfDetailPage'
 import NotFoundPage from '@/pages/NotFoundPage'
+import AIRecommendationsPage from '@/pages/AIRecommendationsPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ function App() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/books/:slug" element={<BookDetailPage />} />
             <Route path="/category/:slug" element={<CategoryPage />} />
+            <Route path="/ai-recommendations" element={<AIRecommendationsPage />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path="/profile" element={<ProfilePage />} />

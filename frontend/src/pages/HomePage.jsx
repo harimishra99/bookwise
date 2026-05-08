@@ -198,6 +198,31 @@ const newReleases = Array.isArray(newReleasesRaw) ? newReleasesRaw : newReleases
         </div>
       </section>
 
+      {/* AI Recommendations Banner */}
+<section className="ai-banner-section">
+  <div className="section-container">
+    <motion.div
+      className="ai-banner"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
+      <div className="ai-banner-content">
+        <Sparkles size={28} className="ai-banner-icon" />
+        <div>
+          <h3>Not sure what to read next?</h3>
+          <p>Answer 7 quick questions and our AI will find your perfect book match</p>
+        </div>
+      </div>
+      <button
+        onClick={() => navigate('/ai-recommendations')}
+        className="btn-primary ai-banner-btn"
+      >
+        Try AI Book Finder →
+      </button>
+    </motion.div>
+  </div>
+</section>
+
       {/* ── Featured Categories ────────────────────────────── */}
       <section className="home-section categories-section">
         <div className="section-container">

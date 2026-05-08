@@ -88,8 +88,12 @@ export default function Navbar() {
         {/* ── Desktop Nav Links ─────────────────────────────── */}
         <div className="navbar-links">
           <Link to="/" className="nav-link">Home</Link>
+          <Link to="/ai-recommendations" className="nav-link" style={{ color: '#a78bfa' }}>
+              ✨ AI Picks
+          </Link>
             {isAuthenticated && (
           <Link to="/shelves" className="nav-link">My Shelves</Link>
+          
       )}
 
           {/* Categories Dropdown */}

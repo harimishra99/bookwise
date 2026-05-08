@@ -173,3 +173,10 @@ export function useExternalSearch(query) {
     staleTime: 1000 * 60 * 5,
   })
 }
+
+export function useAIRecommendations() {
+  return useMutation({
+    mutationFn: (formData) => 
+      api.post('/recommendations/ai/', formData).then(r => r.data),
+  })
+}
