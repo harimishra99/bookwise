@@ -1,12 +1,12 @@
 import os
 import json
+import re
+import traceback
 from groq import Groq
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from apps.books.models import Book
-# Clean response more aggressively
-import re
 
 client = Groq(api_key=os.environ.get('GROQ_API_KEY'))
 
@@ -26,10 +26,10 @@ class AIRecommendationView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        data = request.data
-        
-        # Build prompt from user answers
-        prompt = f"""Give me 6 book recommendations based on these preferences:
+        try:
+            data = request.data
+            
+            prompt = f"""Give me 6 book recommendations based on these preferences:
 - Favorite genres: {data.get('genres', 'not specified')}
 - Favorite books they've read: {data.get('favorite_books', 'not specified')}
 - Favorite authors: {data.get('favorite_authors', 'not specified')}
@@ -40,7 +40,6 @@ class AIRecommendationView(APIView):
 
 Respond with ONLY the JSON array."""
 
-        try:
             chat_completion = client.chat.completions.create(
                 messages=[
                     {"role": "system", "content": SYSTEM_PROMPT},
@@ -52,40 +51,47 @@ Respond with ONLY the JSON array."""
             )
             
             response_text = chat_completion.choices[0].message.content.strip()
-
-            # Remove markdown code blocks
+            print(f"GROQ RESPONSE: {response_text}")  # ← this will show in logs
+            
+            # Clean response
             response_text = re.sub(r'```json\s*', '', response_text)
             response_text = re.sub(r'```\s*', '', response_text)
             response_text = response_text.strip()
-
-            # Extract JSON array if there's text around it
+            
+            # Extract JSON array
             json_match = re.search(r'\[.*\]', response_text, re.DOTALL)
             if json_match:
                 response_text = json_match.group()
-
+            
             recommendations = json.loads(response_text)
             
-            # Try to match with books in our DB
             enriched = []
             for rec in recommendations:
-                book_match = Book.objects.filter(
-                    title__icontains=rec['title'].split(':')[0][:30]
-                ).first()
-                
-                enriched.append({
-                    'title': rec['title'],
-                    'author': rec['author'],
-                    'reason': rec['reason'],
-                    'db_book': {
-                        'slug': book_match.slug,
-                        'cover_image': book_match.cover_image.url if book_match and book_match.cover_image else None,
-                        'rating': str(book_match.rating) if book_match else None,
-                    } if book_match else None
-                })
+                try:
+                    book_match = Book.objects.filter(
+                        title__icontains=rec['title'].split(':')[0][:30]
+                    ).first()
+                    enriched.append({
+                        'title': rec['title'],
+                        'author': rec['author'],
+                        'reason': rec['reason'],
+                        'db_book': {
+                            'slug': book_match.slug,
+                            'cover_image': book_match.cover_image.url if book_match.cover_image else None,
+                            'rating': str(book_match.rating),
+                        } if book_match else None
+                    })
+                except Exception as e:
+                    print(f"Error enriching book: {e}")
+                    enriched.append({
+                        'title': rec.get('title', ''),
+                        'author': rec.get('author', ''),
+                        'reason': rec.get('reason', ''),
+                        'db_book': None
+                    })
             
             return Response({'recommendations': enriched, 'success': True})
         
-        except json.JSONDecodeError:
-            return Response({'error': 'AI response parsing failed', 'success': False}, status=500)
         except Exception as e:
+            print(f"AI ERROR: {traceback.format_exc()}")  # ← full traceback in logs
             return Response({'error': str(e), 'success': False}, status=500)
