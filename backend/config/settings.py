@@ -224,7 +224,7 @@ DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='BookWise <noreply@boo
 # ── STATIC FILES ──────────────────────────────────────────────
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # ── MEDIA FILES ───────────────────────────────────────────────
 MEDIA_URL = '/media/'
