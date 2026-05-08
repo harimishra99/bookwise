@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from apps.books.models import Book
+# Clean response more aggressively
+import re
 
 client = Groq(api_key=os.environ.get('GROQ_API_KEY'))
 
@@ -50,13 +52,17 @@ Respond with ONLY the JSON array."""
             )
             
             response_text = chat_completion.choices[0].message.content.strip()
-            
-            # Clean response if needed
-            if response_text.startswith('```'):
-                response_text = response_text.split('```')[1]
-                if response_text.startswith('json'):
-                    response_text = response_text[4:]
-            
+
+            # Remove markdown code blocks
+            response_text = re.sub(r'```json\s*', '', response_text)
+            response_text = re.sub(r'```\s*', '', response_text)
+            response_text = response_text.strip()
+
+            # Extract JSON array if there's text around it
+            json_match = re.search(r'\[.*\]', response_text, re.DOTALL)
+            if json_match:
+                response_text = json_match.group()
+
             recommendations = json.loads(response_text)
             
             # Try to match with books in our DB
